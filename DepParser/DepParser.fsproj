@@ -58,7 +58,6 @@
     <Compile Include="Transition\Decoder.fs" />
     <Compile Include="Transition\State.fs" />
     <Compile Include="Program.fs" />
-    <Compile Include="Transition\Trainer.fs" />
     <None Include="App.config" />
   </ItemGroup>
   <PropertyGroup>
