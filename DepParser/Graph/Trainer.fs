@@ -18,6 +18,7 @@ type Trainer() =
             String('#', p) |> Console.Write
             String('-', 20 - p) |> Console.Write
 
+    /// Feature extraction
     let toFeats (t1: Tree) (t2: Tree) (lmost: bool) =
         let toHash array = array |> (fun x -> abs (Array.toHash x) % weights.Length)
         let form = if lmost then -1 else 1
@@ -29,6 +30,7 @@ type Trainer() =
             [| "t-f".GetHashCode(); tx.Cat; ty.Form; form |] |> toHash
         |]
 
+    /// Parser for prediction
     let psr = Parser(fun t1 t2 lmost ->
         let feats = toFeats t1 t2 lmost
         let score = feats |> Array.sumBy (fun x -> weights.[x])
@@ -36,6 +38,7 @@ type Trainer() =
         Tree(t1, t2, lmost, feats, score)
         )
 
+    /// Parser for gold data
     let goldPsr = Parser(fun t1 t2 lmost ->
         let v1, v2 = t1.Value, t2.Value
         let b = (v1.Id = v2.Head && lmost) || (v1.Head = v2.Id && not lmost)
@@ -48,10 +51,10 @@ type Trainer() =
         )
 
     member this.Train(traindata: Token[][]) =
-        let traindata = traindata |> Array.take 5000
+        //let traindata = traindata |> Array.take 5000
 
         let mutable count = 0
-        for iter = 1 to 5 do
+        for iter = 1 to 10 do
             ("iter {0}:", iter) |> Console.WriteLine
             let data = traindata
             Array.shuffle data
@@ -63,6 +66,8 @@ type Trainer() =
 
                 let y = goldPsr.Decode sent
                 let z = psr.Decode sent
+
+                /// Perceptron
                 for n in y.Topdown do
                     if not n.IsLeaf then
                         n.Feats |> Array.iter (fun f -> weights.[f] <- weights.[f] + 1.0)
@@ -75,4 +80,5 @@ type Trainer() =
                 Array.zip sent.[1 .. sent.Length - 1] hz |> infs.Add
 
             infs.ToArray() |> Array.concat |> Eval.run
+            Console.WriteLine("")
         ()

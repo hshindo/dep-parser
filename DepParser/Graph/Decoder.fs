@@ -18,6 +18,7 @@ type Parser(create: Tree -> Tree -> bool -> Tree) =
         for i = 0 to length - 1 do
             Array.Clear(chart.[i], 0, length)
 
+    /// First-order Eisner algorithm
     member this.Decode(data: 'T[]) =
         reset data.Length
         for i = 0 to data.Length - 1 do chart.[i].[i] <- Tree(data.[i])

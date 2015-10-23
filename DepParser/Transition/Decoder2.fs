@@ -1,4 +1,4 @@
-﻿namespace TransitionParsing
+﻿namespace DepParsing.Traisition
 
 type Node(act: int, state: IState, feats: int[], weight: float) =
     member this.Act = act

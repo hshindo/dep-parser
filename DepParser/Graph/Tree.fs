@@ -20,6 +20,7 @@ type Tree private(value: Token, left: Tree, right: Tree, lmost: bool, feats: int
     member this.Score = score
 
     member this.IsLeaf = left = null && right = null
+
     member this.Topdown =
         seq {
             yield this

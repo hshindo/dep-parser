@@ -33,7 +33,8 @@ module Token =
             let items = text.Split '\t'
             let id = items.[0] |> int
             let form = items.[1].ToLower() |> digitToZero
-            let form = form |> (fun s -> FormDict.Add s)
+            let form = FormDict.Add(form)
+            //let form = form |> (fun s -> FormDict.Add s)
             let cat = items.[4] |> CatDict.Add
             let head = items.[6] |> int
             Token(id, form, cat, head)

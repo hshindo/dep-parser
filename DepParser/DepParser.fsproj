@@ -55,8 +55,8 @@
     <Compile Include="Graph\Tree.fs" />
     <Compile Include="Graph\Decoder.fs" />
     <Compile Include="Graph\Trainer.fs" />
-    <Compile Include="Transition\Decoder.fs" />
     <Compile Include="Transition\State.fs" />
+    <Compile Include="Transition\Decoder2.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
   </ItemGroup>
